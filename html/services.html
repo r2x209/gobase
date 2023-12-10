@@ -1,0 +1,7 @@
+{{ template "header" . }}
+
+{{ range .Services }}
+    <div>{{ .Title }}</div>
+{{ end }}
+
+{{ template "footer" . }}

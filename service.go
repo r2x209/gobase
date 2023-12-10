@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"text/template"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -16,6 +17,11 @@ type Service struct {
 	Duration    int     `json:"duration"`
 	Price       float32 `json:"price"`
 	Available   string  `json:"available"`
+}
+
+type TemplateData struct {
+	PageTitle string
+	Services  []Service
 }
 
 func getServices(query string) []Service {
@@ -49,4 +55,15 @@ func getAvailableServicesJSON(w http.ResponseWriter, r *http.Request) {
 	query := "SELECT * FROM services WHERE available='y' ORDER BY title ASC"
 	services := getServices(query)
 	json.NewEncoder(w).Encode(services)
+}
+
+func getAvailableServicesHTML(w http.ResponseWriter, r *http.Request) {
+	var tplData TemplateData
+	tplData.PageTitle = "Services"
+
+	query := "SELECT * FROM services WHERE available='y' ORDER BY title ASC"
+	tplData.Services = getServices(query)
+
+	tmpl, _ := template.ParseFiles("./html/services.html", "./html/base.html")
+	tmpl.ExecuteTemplate(w, "services.html", tplData)
 }

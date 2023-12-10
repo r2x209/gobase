@@ -10,7 +10,9 @@ func main() {
 	http.HandleFunc("/api/services/", getAllServicesJSON)
 	http.HandleFunc("/api/services/available/", getAvailableServicesJSON)
 
-	http.Handle("/", http.FileServer(http.Dir("/app/html")))
+	http.HandleFunc("/services/", getAvailableServicesHTML)
+
+	http.Handle("/", http.FileServer(http.Dir("html")))
 
 	http.ListenAndServe(":8080", nil)
 }
