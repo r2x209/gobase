@@ -39,12 +39,14 @@ func getServices(query string) []Service {
 	return services
 }
 
-func getAllServices(w http.ResponseWriter, r *http.Request) {
-	services := getServices("SELECT * FROM services ORDER BY title ASC")
+func getAllServicesJSON(w http.ResponseWriter, r *http.Request) {
+	query := "SELECT * FROM services ORDER BY title ASC"
+	services := getServices(query)
 	json.NewEncoder(w).Encode(services)
 }
 
-func getAvailableServices(w http.ResponseWriter, r *http.Request) {
-	services := getServices("SELECT * FROM services WHERE available='y' ORDER BY title ASC")
+func getAvailableServicesJSON(w http.ResponseWriter, r *http.Request) {
+	query := "SELECT * FROM services WHERE available='y' ORDER BY title ASC"
+	services := getServices(query)
 	json.NewEncoder(w).Encode(services)
 }
