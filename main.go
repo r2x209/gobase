@@ -5,10 +5,12 @@ import (
 )
 
 func main() {
+	createDB()
 
-	dbCreate(dbFile, dbCreateSQL)
+	http.HandleFunc("/api/services/", getAllServices)
+	http.HandleFunc("/api/services/available/", getAvailableServices)
 
-	// http.HandleFunc("/duplicates/", Duplicates)
 	http.Handle("/", http.FileServer(http.Dir("/app/html")))
+
 	http.ListenAndServe(":8080", nil)
 }
