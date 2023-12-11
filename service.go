@@ -3,9 +3,9 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"html/template"
 	"log"
 	"net/http"
-	"text/template"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -20,6 +20,7 @@ type Service struct {
 }
 
 type TemplateData struct {
+	AppTitle  string
 	PageTitle string
 	Services  []Service
 }
@@ -59,11 +60,12 @@ func getAvailableServicesJSON(w http.ResponseWriter, r *http.Request) {
 
 func getAvailableServicesHTML(w http.ResponseWriter, r *http.Request) {
 	var tplData TemplateData
+	tplData.AppTitle = appTitle
 	tplData.PageTitle = "Services"
 
 	query := "SELECT * FROM services WHERE available='y' ORDER BY title ASC"
 	tplData.Services = getServices(query)
 
-	tmpl, _ := template.ParseFiles("./html/services.html", "./html/base.html")
+	tmpl, _ := template.ParseFS(tplDir, "templates/services.html", "templates/base.html")
 	tmpl.ExecuteTemplate(w, "services.html", tplData)
 }
