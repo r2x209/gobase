@@ -47,13 +47,13 @@ func getServices(query string) []Service {
 }
 
 func getAllServicesJSON(w http.ResponseWriter, r *http.Request) {
-	query := "SELECT * FROM services ORDER BY title ASC"
+	query := "SELECT * FROM Services ORDER BY Title ASC"
 	services := getServices(query)
 	json.NewEncoder(w).Encode(services)
 }
 
 func getAvailableServicesJSON(w http.ResponseWriter, r *http.Request) {
-	query := "SELECT * FROM services WHERE available='y' ORDER BY title ASC"
+	query := "SELECT * FROM Services WHERE Active='Y' ORDER BY Title ASC"
 	services := getServices(query)
 	json.NewEncoder(w).Encode(services)
 }
@@ -63,7 +63,7 @@ func getAvailableServicesHTML(w http.ResponseWriter, r *http.Request) {
 	tplData.AppTitle = appTitle
 	tplData.PageTitle = "Services"
 
-	query := "SELECT * FROM services WHERE available='y' ORDER BY title ASC"
+	query := "SELECT * FROM Services WHERE Active='Y' ORDER BY title ASC"
 	tplData.Services = getServices(query)
 
 	tmpl, _ := template.ParseFS(tplDir, "templates/services.html", "templates/base.html")

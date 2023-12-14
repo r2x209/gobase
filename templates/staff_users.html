@@ -1,0 +1,28 @@
+{{ template "header" . }}
+
+<div class="container">
+    <div class="row">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range .Users }}
+                    <tr>
+                        <td><a href="/staff/user/{{ .ID }}" class="link-dark"><i class="bi bi-credit-card-2-front-fill"></i></a></td>
+                        <td style="width:50%">{{ .FullName }}</td>
+                        <td style="width:50%">{{ .Email }}</td>
+                        <td class="text-center">{{ .Active }}</td>
+                    </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{ template "footer" . }}

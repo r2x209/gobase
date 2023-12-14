@@ -1,0 +1,35 @@
+{{ template "header" . }}
+        <form action="/staff/user" method="post">
+            <input type="hidden" name="ID" value="{{ .User.ID }}" />
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 col-md-6 bg-body-secondary rounded p-4 p-xl-5 shadow">
+                        <h2>User<i class="bi bi-person-vcard-fill float-end"></i></h2>
+                        <hr class="mb-4">
+                        <div class="mb-3">
+                            <label for="FullName" class="form-label">Full Name</label>
+                            <input name="FullName" type="text" class="form-control" id="FullName" value="{{ .User.FullName }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email address</label>
+                            <input name="Email" type="email" class="form-control" id="Email" value="{{ .User.Email }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Password" class="form-label">Password</label>
+                            <input name="Password" type="password" class="form-control" id="Password">
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input name="Active" type="checkbox" class="form-check-input" id="Active" {{ if (eq .User.Active "Y") }} checked="checked" {{ end }}>
+                                <label class="form-check-label" for="Active">Active</label>
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-danger float-end">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+{{ template "footer" . }}
